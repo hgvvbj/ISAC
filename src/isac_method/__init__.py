@@ -13,6 +13,8 @@ from .arrays import (
 )
 from .crb import CRBResult, stochastic_crb
 from .gradients import crb_gradient, directional_derivative
+from .inner_solver import InnerResult, InnerSolverConfig, solve_fixed_array
+from .recovery import RecoveryResult, recover_precoders
 from .sensing import (
     left_pseudoinverse,
     processed_noise_covariance,
@@ -22,13 +24,18 @@ from .sensing import (
 __all__ = [
     "ArraySelection",
     "CRBResult",
+    "InnerResult",
+    "InnerSolverConfig",
+    "RecoveryResult",
     "candidate_ula_steering",
     "crb_gradient",
     "directional_derivative",
     "left_pseudoinverse",
     "make_selection",
     "processed_noise_covariance",
+    "recover_precoders",
     "sensing_operator",
+    "solve_fixed_array",
     "stochastic_crb",
     "sum_coarray_positions",
     "sum_coarray_steering",
