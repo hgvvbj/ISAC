@@ -287,6 +287,11 @@ def validate_inner_and_recovery(seed: int) -> dict[str, Any]:
         )
         before_sinr = covariance_sinrs(result.covariances, channels, noises)
         recovery = recover_precoders(result.q, result.covariances, channels, noises)
+        full_precoder = np.column_stack((recovery.wc, recovery.ws))
+        full_precoder_rank = int(np.linalg.matrix_rank(full_precoder))
+        full_precoder_minimum_singular_value = float(
+            np.linalg.svd(full_precoder, compute_uv=False).min()
+        )
         accepted = [item for item in result.history if item.accepted]
         accepted_crbs = [item.true_crb for item in accepted]
         monotone = all(
@@ -307,6 +312,7 @@ def validate_inner_and_recovery(seed: int) -> dict[str, Any]:
             and recovery.covariance_relative_error < 1e-7
             and recovery.dominance_min_eigenvalues.min() >= -2e-7
             and recovery.sensing_min_eigenvalue >= -2e-7
+            and full_precoder_rank == selection.mt
         )
         scenarios.append(
             {
@@ -331,6 +337,9 @@ def validate_inner_and_recovery(seed: int) -> dict[str, Any]:
                     recovery.dominance_min_eigenvalues.min()
                 ),
                 "sensing_covariance_min_eigenvalue": recovery.sensing_min_eigenvalue,
+                "full_precoder_shape": list(full_precoder.shape),
+                "full_precoder_rank": full_precoder_rank,
+                "full_precoder_minimum_singular_value": full_precoder_minimum_singular_value,
                 "passed": scenario_passed,
             }
         )
@@ -366,13 +375,18 @@ def main() -> int:
     parser.add_argument("--seed", type=int, default=20260922)
     parser.add_argument("--noise-samples", type=int, default=200_000)
     parser.add_argument("--timing-repetitions", type=int, default=30)
+    parser.add_argument(
+        "--code-commit",
+        default=None,
+        help="Committed implementation SHA when the local Git history is mirrored through another transport",
+    )
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
 
     report: dict[str, Any] = {
         "schema_version": 1,
         "method_spec_commit": METHOD_SPEC_COMMIT,
-        "code_commit": _git("rev-parse", "HEAD"),
+        "code_commit": args.code_commit or _git("rev-parse", "HEAD"),
         "branch": _git("rev-parse", "--abbrev-ref", "HEAD"),
         "seed": args.seed,
         "environment": {
@@ -414,4 +428,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

@@ -1,8 +1,14 @@
 import numpy as np
+import pytest
 
 from isac_method.arrays import make_selection, manifold
 from isac_method.communication import covariance_feasibility_metrics, is_feasible
-from isac_method.inner_solver import InnerSolverConfig, feasible_initialization, solve_fixed_array
+from isac_method.inner_solver import (
+    CommunicationInfeasible,
+    InnerSolverConfig,
+    feasible_initialization,
+    solve_fixed_array,
+)
 from isac_method.recovery import recover_precoders
 
 
@@ -39,6 +45,21 @@ def test_feasible_initialization_and_rank_one_recovery() -> None:
     assert recovery.dominance_min_eigenvalues.min() > -2e-7
     assert recovery.sensing_min_eigenvalue > -2e-7
     assert recovery.ws.shape == (channels.shape[0], channels.shape[0])
+    full_precoder = np.column_stack((recovery.wc, recovery.ws))
+    assert full_precoder.shape == (channels.shape[0], channels.shape[1] + channels.shape[0])
+    assert np.linalg.matrix_rank(full_precoder) == channels.shape[0]
+
+
+def test_communication_infeasibility_is_reported_without_fake_crb() -> None:
+    channels = np.array([[1.0, 1.0], [0.0, 0.0]], dtype=np.complex128)
+    config = InnerSolverConfig(p_max=0.2, epsilon_q=0.01)
+    with pytest.raises(CommunicationInfeasible):
+        feasible_initialization(
+            channels,
+            sinr_targets=[10.0, 10.0],
+            noise_powers=[1.0, 1.0],
+            config=config,
+        )
 
 
 def test_inner_solver_preserves_feasibility_and_monotone_accepted_crb() -> None:
