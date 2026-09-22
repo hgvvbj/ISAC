@@ -31,7 +31,7 @@ Use this file only for results that are traceable to a concrete repository commi
 ### 2026-09-22 — pre-outer core sensing/CRB/inner validation
 
 - Method-spec commit: `4fa60f82b6aa0c0561169a2fce5af30c35014f97`
-- Code commit: `aeb76111b44ff7127f6786403b1e70eaf65cbfa6`
+- Code commit: `f170ab716a790cc5ab1ad9bea63c251eb4771c52`
 - Branch: `paper-method-sync`
 - Experiment script: `scripts/run_core_validation.py`
 - Configuration file / command: `.venv/Scripts/python.exe scripts/run_core_validation.py --output results/generated/core_validation_20260922`
@@ -39,17 +39,18 @@ Use this file only for results that are traceable to a concrete repository commi
 - Seeds: master seed `20260922`; inner seeds `20260932`, `20260933`, `20260934`
 - Online evaluation budget: not applicable; outer search was not executed
 - Result files: `results/generated/core_validation_20260922/summary.json`, `results/generated/core_validation_20260922/inner_convergence.csv`
-- Inner-solver validation status: passed all implemented unit and integration checks (`12 passed`)
+- Inner-solver validation status: passed all implemented unit and integration checks (`13 passed`), including explicit communication-infeasibility reporting without an artificial CRB
 - Key numerical results:
   - left-pseudoinverse relative error: `5.2954e-16`
   - `G^H G = Q^T kron I` relative error: `4.7717e-17`
   - processed-noise Monte Carlo covariance relative error: `7.1194e-3` with `200000` samples
   - maximum full/Woodbury inverse, FIM, and CRB relative errors: `1.9485e-13`, `1.0274e-12`, `3.7101e-13`
-  - 64-dimensional covariance inverse timing: full `5.8460e-4` s, Woodbury `2.0950e-4` s per call (`2.7905x` speedup); Woodbury was slower for the 9- and 16-dimensional cases because fixed overhead dominated
+  - 64-dimensional covariance inverse timing: full `5.9543e-4` s, Woodbury `2.0824e-4` s per call (`2.8593x` speedup); Woodbury was slower for the smaller cases because fixed overhead dominated
   - maximum/median analytical-gradient directional-check relative errors: `3.7818e-8` / `7.2550e-9`
   - three fixed-array accepted CRB decreases: `3.4397%`, `3.4824%`, `2.2804%`
   - all accepted inner points feasible within the declared `2e-6` numerical tolerance; accepted true CRB sequences were monotonically nonincreasing
   - maximum rank-one desired-power error: `1.1102e-16`; maximum recorded Q reconstruction relative error: `6.7934e-16`; all recovered SINRs exceeded their targets
+  - all recovered overall precoders had shape `4 x 7`, rank `4`, and minimum singular value at least `8.8193e-1`
 - Failures / infeasible calls: none in this deterministic validation set
 - Interpretation allowed by the evidence: the implemented full and Woodbury paths are numerically equivalent for these cases; the analytical CRB gradient passes directional checks; the implemented accepted inner iterates remain feasible and their true CRB is nonincreasing; the specified rank-one recovery preserves feasibility in these cases
 - Claims that are NOT supported: global optimum, local optimum, joint KKT convergence, general runtime superiority at every matrix size, final paper performance, or any outer-search/prior/GP claim

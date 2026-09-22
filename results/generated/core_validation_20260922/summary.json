@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "method_spec_commit": "4fa60f82b6aa0c0561169a2fce5af30c35014f97",
-  "code_commit": "aeb76111b44ff7127f6786403b1e70eaf65cbfa6",
+  "code_commit": "f170ab716a790cc5ab1ad9bea63c251eb4771c52",
   "branch": "paper-method-sync",
   "seed": 20260922,
   "environment": {
@@ -91,9 +91,9 @@
         "inverse_relative_error": 3.4407707956994103e-15,
         "fim_relative_error": 3.2594794624510115e-14,
         "crb_relative_error": 2.064007822443263e-14,
-        "full_inverse_seconds": 5.845666552583377e-05,
-        "woodbury_inverse_seconds": 0.00010475000211348136,
-        "inverse_speedup_full_over_woodbury": 0.5580588481755303,
+        "full_inverse_seconds": 6.007999957849582e-05,
+        "woodbury_inverse_seconds": 0.00011180999378363291,
+        "inverse_speedup_full_over_woodbury": 0.5373401566836552,
         "full_crb": 2.051913122721666e-06,
         "woodbury_crb": 2.0519131227216235e-06,
         "passed": true
@@ -106,9 +106,9 @@
         "inverse_relative_error": 4.3746696211169537e-14,
         "fim_relative_error": 1.0068157750772154e-13,
         "crb_relative_error": 1.5375389992305965e-14,
-        "full_inverse_seconds": 7.183666651447615e-05,
-        "woodbury_inverse_seconds": 0.0001292033353820443,
-        "inverse_speedup_full_over_woodbury": 0.5559969973070793,
+        "full_inverse_seconds": 8.370333040754e-05,
+        "woodbury_inverse_seconds": 0.00011665666631112496,
+        "inverse_speedup_full_over_woodbury": 0.7175186215616864,
         "full_crb": 3.443136026460817e-07,
         "woodbury_crb": 3.44313602646087e-07,
         "passed": true
@@ -121,9 +121,9 @@
         "inverse_relative_error": 1.1378830991659082e-13,
         "fim_relative_error": 1.9355886326171426e-13,
         "crb_relative_error": 2.1109142236889806e-13,
-        "full_inverse_seconds": 0.00014189666447540124,
-        "woodbury_inverse_seconds": 0.0001232899958267808,
-        "inverse_speedup_full_over_woodbury": 1.1509179112534185,
+        "full_inverse_seconds": 0.00012331999993572633,
+        "woodbury_inverse_seconds": 0.00012727000284940004,
+        "inverse_speedup_full_over_woodbury": 0.968963598450235,
         "full_crb": 5.8716143741901055e-08,
         "woodbury_crb": 5.871614374188866e-08,
         "passed": true
@@ -136,9 +136,9 @@
         "inverse_relative_error": 1.9484733828423056e-13,
         "fim_relative_error": 1.0273531762043177e-12,
         "crb_relative_error": 3.710062544383818e-13,
-        "full_inverse_seconds": 0.0005845999966065089,
-        "woodbury_inverse_seconds": 0.00020949666698773703,
-        "inverse_speedup_full_over_woodbury": 2.7904978394750724,
+        "full_inverse_seconds": 0.0005954300053417682,
+        "woodbury_inverse_seconds": 0.00020824000239372253,
+        "inverse_speedup_full_over_woodbury": 2.859344979337734,
         "full_crb": 2.2937710726272754e-08,
         "woodbury_crb": 2.2937710726281264e-08,
         "passed": true
@@ -480,6 +480,12 @@
         "maximum_desired_power_error": 1.1102230246251565e-16,
         "minimum_rk_minus_rhat_eigenvalue": -1.491891337202857e-16,
         "sensing_covariance_min_eigenvalue": 0.30980107523201394,
+        "full_precoder_shape": [
+          4,
+          7
+        ],
+        "full_precoder_rank": 4,
+        "full_precoder_minimum_singular_value": 0.9336169940871831,
         "passed": true
       },
       {
@@ -642,6 +648,12 @@
         "maximum_desired_power_error": 0.0,
         "minimum_rk_minus_rhat_eigenvalue": -1.656981179761194e-17,
         "sensing_covariance_min_eigenvalue": 0.38587567771861847,
+        "full_precoder_shape": [
+          4,
+          7
+        ],
+        "full_precoder_rank": 4,
+        "full_precoder_minimum_singular_value": 0.9648464381690139,
         "passed": true
       },
       {
@@ -804,6 +816,12 @@
         "maximum_desired_power_error": 1.1102230246251565e-16,
         "minimum_rk_minus_rhat_eigenvalue": -2.9928513512020956e-17,
         "sensing_covariance_min_eigenvalue": 0.29159014775361175,
+        "full_precoder_shape": [
+          4,
+          7
+        ],
+        "full_precoder_rank": 4,
+        "full_precoder_minimum_singular_value": 0.8819294695858728,
         "passed": true
       }
     ],
