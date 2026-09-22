@@ -12,6 +12,7 @@ from .arrays import (
     sum_coarray_steering,
 )
 from .crb import CRBResult, stochastic_crb
+from .gradients import crb_gradient, directional_derivative
 from .sensing import (
     left_pseudoinverse,
     processed_noise_covariance,
@@ -22,6 +23,8 @@ __all__ = [
     "ArraySelection",
     "CRBResult",
     "candidate_ula_steering",
+    "crb_gradient",
+    "directional_derivative",
     "left_pseudoinverse",
     "make_selection",
     "processed_noise_covariance",
@@ -30,4 +33,3 @@ __all__ = [
     "sum_coarray_positions",
     "sum_coarray_steering",
 ]
-
