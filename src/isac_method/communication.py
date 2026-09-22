@@ -110,3 +110,26 @@ def beamformer_sinrs(
     interference = powers.sum(axis=1) - desired
     return (desired / (interference + noises)).astype(np.float64)
 
+
+def covariance_sinrs(
+    covariances: list[ComplexArray],
+    channels: ComplexArray,
+    noise_powers: NDArray[np.floating] | list[float],
+) -> RealArray:
+    """Evaluate SINRs represented by relaxed communication covariances."""
+
+    noises = np.asarray(noise_powers, dtype=np.float64)
+    user_count = channels.shape[1]
+    if len(covariances) != user_count or noises.shape != (user_count,):
+        raise ValueError("communication dimensions do not agree")
+    values = np.empty(user_count, dtype=np.float64)
+    for user, channel in enumerate(channels.T):
+        desired = quadratic_form(channel, covariances[user])
+        interference = sum(
+            quadratic_form(channel, covariance)
+            for index, covariance in enumerate(covariances)
+            if index != user
+        )
+        values[user] = desired / (interference + noises[user])
+    return values
+
